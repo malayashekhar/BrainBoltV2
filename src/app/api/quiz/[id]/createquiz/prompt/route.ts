@@ -33,8 +33,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       );
     }
 
-    console.log("Request body:", { quizId, title, numberOfQuestions });
-
     const aiServiceUrl = process.env.AI_SERVICE_URL_PROMPT || "";
     const response = await fetch(aiServiceUrl, {
       method: "POST",

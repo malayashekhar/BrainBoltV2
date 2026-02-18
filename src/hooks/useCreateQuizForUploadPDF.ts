@@ -39,7 +39,6 @@ export function useCreateQuizForUploadPDF() {
             formData.append('numberOfQuestions', numberOfQuestions);
             
             const newQuizId = crypto.randomUUID();
-            console.log(newQuizId);
             
             const res = await fetch(`/api/quiz/${newQuizId}/createquiz/uploadpdf`, {
                 method: "POST",

@@ -22,17 +22,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     }
 
     const formData = await req.formData();
-    console.log("Form data entries:", Array.from(formData.entries()));
     
     const pdfFile = formData.get("document") as File;
     const quizId = formData.get("title") as string;
     const numberOfQuestions = formData.get("numberOfQuestions") as string;
-
-    console.log("Received data:", { 
-      pdfFile: pdfFile ? `File: ${pdfFile.name}, Size: ${pdfFile.size}` : null,
-      quizId,
-      numberOfQuestions 
-    });
 
     if (!pdfFile || !quizId || !numberOfQuestions) {
       return NextResponse.json(
@@ -43,8 +36,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     const arrayBuffer = await pdfFile.arrayBuffer();
     const base64Pdf = Buffer.from(arrayBuffer).toString("base64");
-
-    console.log("Sending PDF to AI service:", { quizId, numberOfQuestions, pdfSize: pdfFile.size });
 
     const aiServiceUrl = process.env.AI_SERVICE_URL_UPLOAD_PDF || "";
     const response = await fetch(aiServiceUrl, {

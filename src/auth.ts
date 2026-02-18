@@ -15,9 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
  callbacks: {
   async jwt({ token, user }) {
    if (user) {
-    // get user from db with the email
-    // if there is no user with the email, create new user
-    // else set the user data to token
+    // TODO: Implement user data handling
    }
 
    return token;
@@ -25,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   async session({ session, token }) {
    if (token) {
-    // set the token data to session
+    // TODO: Implement token to session mapping
    }
 
    return session;

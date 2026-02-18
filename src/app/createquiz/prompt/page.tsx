@@ -20,29 +20,6 @@ export default function PromptQuiz() {
     const { saveQuiz } = useCreateQuiz();
 
     if (status === "loading") return <Loading />;
-    //     try {
-    //         const newQuizId = crypto.randomUUID();
-    //         const res = await fetch(`/api/quiz/${newQuizId}/createquiz/prompt`, {
-    //             method: "POST",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify({
-    //                 quizId: newQuizId,
-    //                 title,
-    //                 numberOfQuestions,
-    //             }),
-    //         });
-    //         if (res.ok) {
-    //             router.push(`/dashboard`);
-    //         }
-
-    //         if (!res.ok) {
-    //             throw new Error("Failed to created quiz");
-    //         }
-
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
 
     return (
         <div className={pageContainer}>

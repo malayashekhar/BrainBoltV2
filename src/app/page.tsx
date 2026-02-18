@@ -15,48 +15,12 @@ import { pageContainer, boxContainer } from "@/styles/variables";
 // Hooks
 import { useShareQuiz } from "@/hooks/useShareQuiz";
 
-
 export default function Home() {
   const { data: session, status } = useSession();
   const [shareKey, setShareKey] = useState("");
   const { addSharedQuiz, loading } = useShareQuiz();
 
   if (status === "loading") return <Loading />;
-  //   setLoading(true);
-  //   try {
-  //     console.log("Share Key:", shareKey);
-
-  //     if (!shareKey.trim()) {
-  //       alert("Please enter a share key");
-  //       return;
-  //     }
-
-  //     const response = await fetch(`/api/addsharedquiz`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ shareKey: shareKey.trim() }),
-  //     });
-
-  //     const data = await response.json();
-  //     console.log("Response:", data);
-
-  //     if (!response.ok) {
-  //       throw new Error(data.error || "Failed to add shared quiz");
-  //     }
-
-  //     alert("Quiz added successfully!");
-  //     router.push("/dashboard");
-
-  //   } catch (error) {
-  //     console.error("Error adding shared quiz:", error);
-  //     const errorMessage = error instanceof Error ? error.message : "Failed to add shared quiz";
-  //     alert(errorMessage);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   return (
     <div className={pageContainer}>

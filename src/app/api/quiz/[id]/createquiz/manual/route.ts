@@ -41,7 +41,6 @@ export async function POST(req: Request) {
         },
       },
     });
-    console.log("Quiz created:", quiz);
     return NextResponse.json({ id: quiz.id });
   } catch (error) {
     console.error("Error creating quiz:", error);
