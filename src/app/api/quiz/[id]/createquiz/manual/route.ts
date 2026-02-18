@@ -1,18 +1,8 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { auth } from "@/auth";
-
-interface Option {
-  id: string;
-  text: string;
-  isCorrect: boolean;
-}
-
-interface Question {
-  id: string;
-  text: string;
-  options: Option[];
-}
+import { Question } from "@/types/questions";
+import { Option } from "@/types/option";
 
 
 export async function POST(req: Request) {

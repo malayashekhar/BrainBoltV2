@@ -1,16 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
 import { auth } from "@/auth";
-
-interface Option {
-  text: string;
-  isCorrect: boolean;
-}
-
-interface Question {
-  text: string;
-  options: Option[];
-}
+import "dotenv/config";
+import { Question } from "@/types/questions";
+import { Option } from "@/types/option";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -48,13 +41,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       );
     }
 
-    // Convert PDF to base64
     const arrayBuffer = await pdfFile.arrayBuffer();
     const base64Pdf = Buffer.from(arrayBuffer).toString("base64");
 
     console.log("Sending PDF to AI service:", { quizId, numberOfQuestions, pdfSize: pdfFile.size });
 
-    const response = await fetch("https://brainbolt-ai-service.onrender.com/generate-quiz-pdf", {
+    const aiServiceUrl = process.env.AI_SERVICE_URL_UPLOAD_PDF || "";
+    const response = await fetch(aiServiceUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

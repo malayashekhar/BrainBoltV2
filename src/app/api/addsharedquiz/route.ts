@@ -23,7 +23,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Share key is required" }, { status: 400 });
     }
 
-    // Find the shared quiz by share key
     const quizShare = await db.quizShare.findFirst({
       where: { 
         shareKey,

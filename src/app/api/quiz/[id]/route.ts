@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { auth } from "@/auth";
+import { Question } from "@/types/questions";
+import { Option } from "@/types/option";
 
 export async function GET(
   req: Request,
@@ -40,9 +42,7 @@ export async function GET(
       return NextResponse.json({ error: "Quiz not found" }, { status: 404 });
     }
 
-    // Check if user owns the quiz or if it's shared
     if (quiz.userId !== user.id) {
-      // Check if quiz is shared
       const share = await db.quizShare.findFirst({
         where: { 
           quizId: id,
@@ -78,18 +78,6 @@ export async function GET(
   }
 }
 
-interface Option {
-  id: string;
-  text: string;
-  isCorrect: boolean;
-}
-
-interface Question {
-  id: string;
-  text: string;
-  options: Option[];
-}
-
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -111,7 +99,6 @@ export async function PUT(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Check if user owns the quiz
     const existingQuiz = await db.quiz.findUnique({
       where: { id },
     });
@@ -124,12 +111,10 @@ export async function PUT(
       return NextResponse.json({ error: "Access denied" }, { status: 403 });
     }
 
-    // Delete existing questions and options
     await db.question.deleteMany({
       where: { quizId: id },
     });
 
-    // Update quiz and create new questions
     const updatedQuiz = await db.quiz.update({
       where: { id },
       data: {
@@ -196,7 +181,6 @@ export async function DELETE(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Check if user owns the quiz
     const existingQuiz = await db.quiz.findUnique({
       where: { id },
     });
@@ -209,7 +193,11 @@ export async function DELETE(
       return NextResponse.json({ error: "Access denied" }, { status: 403 });
     }
 
-    // Delete the quiz (this will cascade delete questions and options)
+    // Delete related quiz shares first
+    await db.quizShare.deleteMany({
+      where: { quizId: id },
+    });
+
     await db.quiz.delete({
       where: { id },
     });

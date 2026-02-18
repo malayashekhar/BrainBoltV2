@@ -24,7 +24,6 @@ export async function POST(
 
     const { score, totalQuestions } = await req.json();
 
-    // Verify quiz exists and user has access
     const quiz = await db.quiz.findUnique({
       where: { id },
     });
@@ -33,9 +32,7 @@ export async function POST(
       return NextResponse.json({ error: "Quiz not found" }, { status: 404 });
     }
 
-    // Check if user owns the quiz or if it's shared
     if (quiz.userId !== user.id) {
-      // Check if quiz is shared
       const share = await db.quizShare.findFirst({
         where: { 
           quizId: id,
@@ -51,7 +48,6 @@ export async function POST(
       }
     }
 
-    // Create attempt record
     const percentage = (score / totalQuestions) * 100;
     const correctAnswers = score;
 
@@ -66,7 +62,6 @@ export async function POST(
       },
     });
 
-    // Update quiz statistics
     await db.quiz.update({
       where: { id },
       data: {
@@ -80,8 +75,8 @@ export async function POST(
       success: true,
       attemptId: attempt.id 
     });
-  } catch (error) {
-    console.error("Error submitting attempt:", error);
+  } catch (err) {
+    console.error("Error submitting attempt:", err);
     return NextResponse.json({ error: "Failed to submit attempt" }, { status: 500 });
   }
 }

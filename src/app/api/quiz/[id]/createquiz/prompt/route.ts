@@ -1,17 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/lib/db";
+import "dotenv/config";
 import { auth } from "@/auth";
-
-
-interface Option {
-  text: string;
-  isCorrect: boolean;
-}
-
-interface Question {
-  text: string;
-  options: Option[];
-}
+import { Question } from "@/types/questions";
+import { Option } from "@/types/option";
 
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -43,7 +35,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     console.log("Request body:", { quizId, title, numberOfQuestions });
 
-    const response = await fetch("https://brainbolt-ai-service.onrender.com/generate-quiz-text", {
+    const aiServiceUrl = process.env.AI_SERVICE_URL_PROMPT || "";
+    const response = await fetch(aiServiceUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

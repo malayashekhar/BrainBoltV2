@@ -1,0 +1,2 @@
+export const pageContainer = "min-h-screen relative w-full overflow-hidden bg-slate-900 flex flex-col px-4 py-12";
+export const boxContainer = "absolute inset-0 w-full h-full bg-slate-900 z-20 mask-[radial-gradient(transparent,white)] pointer-events-none"
