@@ -50,7 +50,7 @@ export function DashboardTables({ quizzes, handleShare, handleDelete }: Dashboar
                                             </div>
                                         </td>
                                         <td className="py-4 px-4 text-neutral-300">
-                                            {new Date(quiz.createdAt).toLocaleDateString()}
+                                            {quiz.createdAt ? new Date(quiz.createdAt).toLocaleDateString() : "N/A"}
                                         </td>
                                         <td className="py-4 px-4 text-center">
                                             <span className="text-neutral-300">
