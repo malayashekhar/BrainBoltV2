@@ -1,9 +1,11 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Question } from "@/types/questions";
+import { useState } from "react";
 
 export function useCreateQuiz() {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const saveQuiz = async (
         title: string,
@@ -12,6 +14,7 @@ export function useCreateQuiz() {
         numberOfQuestions?: string,
         questions?: Question[]
     ) => {
+        setLoading(true);
         try {
             const quizId = crypto.randomUUID();
 
@@ -39,8 +42,10 @@ export function useCreateQuiz() {
         } catch (error) {
             toast.error("Failed to create quiz");
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
-    return { saveQuiz };
+    return { saveQuiz, loading };
 }

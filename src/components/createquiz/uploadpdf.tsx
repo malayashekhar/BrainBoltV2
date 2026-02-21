@@ -1,5 +1,5 @@
 import { BackBtn } from "../ui/back-btn";
-import { Save } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import { UploadPdfProps } from "@/types/upload-pdf-props";
 
 export function UploadPdf({ title, setTitle, numberOfQuestions, setNumberOfQuestions, handleSave, document, setDocument, loading}: UploadPdfProps) {
@@ -49,7 +49,11 @@ export function UploadPdf({ title, setTitle, numberOfQuestions, setNumberOfQuest
                         disabled={loading}
                         className="mt-8 w-full flex items-center justify-center gap-2 px-8 py-4 bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        <Save className="h-5 w-5" />
+                        {loading ? (
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                        ) : (
+                            <Save className="h-5 w-5" />
+                        )}
                         {loading ? "Generating Quiz..." : "Generate Quiz"}
                     </button>
                 </form>

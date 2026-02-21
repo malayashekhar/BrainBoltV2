@@ -6,4 +6,5 @@ export interface PropmtQuizProps {
     description: string; 
     setDescription: (e: string) => void;
     handleSave: () => void;
+    loading: boolean;
 }

@@ -1,8 +1,8 @@
 import { BackBtn } from "../ui/back-btn";
-import { Save } from "lucide-react";
+import { Save, Loader2 } from "lucide-react";
 import { PropmtQuizProps } from "@/types/prompt-quiz";
 
-export function PromptTextQuiz({ title, setTitle, numberOfQuestions, setNumberOfQuestions, description, setDescription, handleSave }: PropmtQuizProps) {
+export function PromptTextQuiz({ title, setTitle, numberOfQuestions, setNumberOfQuestions, description, setDescription, handleSave, loading }: PropmtQuizProps) {
     const isNumberOfQuestionsValid = numberOfQuestions != "" && parseInt(numberOfQuestions) >= 1 && parseInt(numberOfQuestions) <= 30;
     return (
         <main className="z-30 flex flex-1 flex-col items-center w-full max-w-4xl mx-auto mt-16">
@@ -48,10 +48,15 @@ export function PromptTextQuiz({ title, setTitle, numberOfQuestions, setNumberOf
             ) :
                 <button
                     onClick={handleSave}
-                    className="mt-8 flex items-center gap-2 px-8 py-4 bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 cursor-pointer"
+                    disabled={loading}
+                    className="mt-8 flex items-center gap-2 px-8 py-4 bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <Save className="h-5 w-5" />
-                    Save Quiz
+                    {loading ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                        <Save className="h-5 w-5" />
+                    )}
+                    {loading ? "Generating Quiz..." : "Save Quiz"}
                 </button>}
         </main>
     );

@@ -12,4 +12,5 @@ export interface ManualProps {
     updateOption: (e1: string, e2: string, e3: string) => void;
     addQuestion: () => void;
     handleSave: () => void;
+    loading: boolean;
 }

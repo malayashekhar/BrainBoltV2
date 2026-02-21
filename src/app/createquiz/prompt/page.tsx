@@ -17,14 +17,14 @@ export default function PromptQuiz() {
     const [title, setTitle] = useState("");
     const [numberOfQuestions, setNumberOfQuestions] = useState("");
     const [description, setDescription] = useState("")
-    const { saveQuiz } = useCreateQuiz();
+    const { saveQuiz, loading } = useCreateQuiz();
 
     if (status === "loading") return <Loading />;
 
     return (
         <div className={pageContainer}>
             {session && <AuthBar name={session.user?.name} email={session.user?.email} showDashboardButton={true} showCreateQuizButton={false}/> }
-            <PromptTextQuiz title={title} setTitle={setTitle} numberOfQuestions={numberOfQuestions} setNumberOfQuestions={setNumberOfQuestions} description={description} setDescription={setDescription} handleSave={() => saveQuiz(title, description, "prompt", numberOfQuestions)} />
+            <PromptTextQuiz title={title} setTitle={setTitle} numberOfQuestions={numberOfQuestions} setNumberOfQuestions={setNumberOfQuestions} description={description} setDescription={setDescription} handleSave={() => saveQuiz(title, description, "prompt", numberOfQuestions)} loading={loading} />
         </div>
     );
 }

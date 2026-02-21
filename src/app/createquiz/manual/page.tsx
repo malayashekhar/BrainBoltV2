@@ -18,7 +18,7 @@ export default function ManualQuiz() {
 
   const { data: session, status } = useSession();
   const quiz = useManualQuiz();
-  const { saveQuiz } = useCreateQuiz();
+  const { saveQuiz, loading } = useCreateQuiz();
 
   if (status === "loading") return <Loading />;
 
@@ -26,7 +26,7 @@ export default function ManualQuiz() {
     <div className={pageContainer}>
 
       {session && <AuthBar name={session?.user?.name} email={session?.user?.email} showDashboardButton={true} showCreateQuizButton={false}/>}
-      <Manual {...quiz} handleSave={() => saveQuiz(quiz.title, quiz.description, "manual", "", quiz.questions)}/>
+      <Manual {...quiz} handleSave={() => saveQuiz(quiz.title, quiz.description, "manual", "", quiz.questions)} loading={loading}/>
     </div>
   );
 }

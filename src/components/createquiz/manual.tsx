@@ -1,11 +1,11 @@
 "use client"
 
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Trash2, Check, Plus, Save } from "lucide-react"
+import { ArrowLeft, Trash2, Check, Plus, Save, Loader2 } from "lucide-react"
 import { ManualProps } from "@/types/manual-props";
 import { useRouter } from "next/navigation";
 
-export function Manual({ title, description, questions, setTitle, setDescription, removeQuestion, updateQuestion, setCorrectOption, updateOption, addQuestion, handleSave }: ManualProps) {
+export function Manual({ title, description, questions, setTitle, setDescription, removeQuestion, updateQuestion, setCorrectOption, updateOption, addQuestion, handleSave, loading }: ManualProps) {
     const allQuestionsHaveCorrectOption = questions.length === 0 ||
         questions.every(q => q?.options?.some(o => o.isCorrect));
     const allQuestionsHaveText = questions.every(q => q?.text !== "");
@@ -135,10 +135,15 @@ export function Manual({ title, description, questions, setTitle, setDescription
             ) : questions.length > 0 && allQuestionsHaveCorrectOption ? (
                 <button
                     onClick={handleSave}
-                    className="mt-8 flex items-center gap-2 px-8 py-4 bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 cursor-pointer"
+                    disabled={loading}
+                    className="mt-8 flex items-center gap-2 px-8 py-4 bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition transform hover:scale-105 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <Save className="h-5 w-5" />
-                    Save Quiz
+                    {loading ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                        <Save className="h-5 w-5" />
+                    )}
+                    {loading ? "Generating Quiz..." : "Save Quiz"}
                 </button>
             ) : null}
         </main>
